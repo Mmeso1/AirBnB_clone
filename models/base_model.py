@@ -4,7 +4,7 @@ Module for BaseModel class
 """
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel:
@@ -18,6 +18,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
                     setattr(self, key, datetime.strptime(value, timeformat))
+                elif key == '__class__':
+                    continue
                 else:
                     setattr(self, key, value)
         else:
@@ -46,5 +48,5 @@ class BaseModel:
         Updates the public instance attribute updated_at with the current time
         """
         self.updated_at = datetime.now()
-        storage.new(self)
-        storage.save()
+        models.storage.new(self)
+        models.storage.save()
