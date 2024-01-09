@@ -4,6 +4,7 @@ Module for BaseModel class
 """
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -45,3 +46,5 @@ class BaseModel:
         Updates the public instance attribute updated_at with the current time
         """
         self.updated_at = datetime.now()
+        storage.new(self)
+        storage.save()
