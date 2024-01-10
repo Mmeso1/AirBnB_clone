@@ -33,7 +33,7 @@ class FileStorage:
         """
         obj_dict = {}
         for obj in FileStorage.__objects:
-            obj_dict[obj] = FileStoorage.__objects[obj].to_dict()
+            obj_dict[obj] = FileStorage.__objects[obj].to_dict()
         with open(FileStorage.__file_path, mode="w") as file:
             json.dump(obj_dict, file)
 
@@ -47,6 +47,6 @@ class FileStorage:
                 for key, value in obj_dict.items():
                     class_name, obj_id = key.split('.')
                     obj_instance = eval(class_name)(**value)
-                    FileStorage.__objects[key] = obj_instace
+                    FileStorage.__objects[key] = obj_instance
         except FileNotFoundError:
             pass

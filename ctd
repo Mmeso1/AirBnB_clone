@@ -1,0 +1,34 @@
+import sys
+
+# Check if the correct number of command-line arguments is provided
+if len(sys.argv) != 3:
+    print("Usage: python3 check.py <model> <class_name>")
+    sys.exit(1)
+
+model_arg = sys.argv[1]
+class_arg = sys.argv[2]
+
+# Dynamically import the specified module and class
+module_name = f"models.{model_arg.lower()}"
+class_name = class_arg
+
+try:
+    model_module = __import__(module_name, fromlist=[class_name])
+    model_class = getattr(model_module, class_name)
+
+    # Check for undocumented functions
+    def get_undocumented_functions(cls):
+        undocumented_functions = []
+        for name, value in vars(cls).items():
+            if callable(value) and not name.startswith("__") and value.__doc__ is None:
+                undocumented_functions.append(name)
+        return undocumented_functions
+
+    undocumented_functions = get_undocumented_functions(model_class)
+
+    if not undocumented_functions:
+        print(f"All functions in {class_name} are documented.")
+    else:
+        print(f"Undocumented functions in {class_name}:", undocumented_functions)
+except Exception as e:
+    print("[{}] {}".format(e.__class__.__name__, e))
