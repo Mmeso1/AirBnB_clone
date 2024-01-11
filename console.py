@@ -9,6 +9,7 @@ import models
 import shlex
 from datetime import datetime
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
