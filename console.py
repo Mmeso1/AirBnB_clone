@@ -6,6 +6,8 @@
 
 import cmd
 import models
+import shlex
+from datetime import datetime
 from models.base_model import BaseModel
 
 
@@ -91,13 +93,15 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_all(self, line):
-        """Prints all string representation of all instances"""
+        """Prints all string representation of all instances
+based on or not on the class"""
         class_name = self.parseline(line)[0]
 
         if class_name and not globals().get(class_name):
             print("** class doesn't exist **")
         else:
             all_objs = models.storage.all()
+
             if class_name:
                 keys = all_objs.keys()
                 print([str(all_objs[key])
@@ -105,6 +109,33 @@ class HBNBCommand(cmd.Cmd):
             else:
                 for obj in all_objs:
                     print([str(all_objs[obj])])
+
+    def do_update(self, line):
+        """Updates an instance attribute based on the class name"""
+        args = shlex.split(line)
+        arg_count = len(args)
+
+        if arg_count == 0:
+            print("** class name missing **")
+        elif args[0] not in globals():
+            print("** class doesn't exist **")
+        elif arg_count == 1:
+            print("** instance id missing **")
+        else:
+            key = args[0] + '.' + args[1]
+            inst_data = models.storage.all().get(key)
+            if inst_data is None:
+                print('** no instance found **')
+            elif arg_count == 2:
+                print("** attribute name missing **")
+            elif arg_count == 3:
+                print("** value missing **")
+            else:
+                attr, value = args[2:4]
+                attr_type = type(value)
+                setattr(inst_data, attr, attr_type(value))
+                setattr(inst_data, 'updated_at', datetime.now())
+                models.storage.save()
 
 
 if __name__ == '__main__':
