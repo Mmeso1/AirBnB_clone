@@ -5,6 +5,8 @@
 """
 
 import cmd
+import models
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -27,6 +29,82 @@ class HBNBCommand(cmd.Cmd):
         """Returns empty when there's no input
         """
         return
+
+    def __validate_class(self, line):
+        """to vaidate the class input in line"""
+        class_name = self.parseline(line)[0]
+
+        if class_name is None:
+            print("**class name missing **")
+            return None
+        elif not globals().get(class_name):
+            print(f"** class doesn't exist **")
+            return None
+        else:
+            return True
+
+    def __validate_id(self, line):
+        """to validate the id input in line"""
+        classname = self.parseline(line)[0]
+        _id = self.parseline(line)[1]
+        inst_data = models.storage.all().get(classname + '.' + _id)
+
+        if not _id:
+            print("** instance id missing **")
+            return None
+        elif inst_data is None:
+            print("** no instance found **")
+            return None
+        else:
+            return True, inst_data
+
+    def do_create(self, line):
+        """Create a new instance of BaseModel, save and print its id"""
+        classname = self.parseline(line)[0]
+
+        if not self.__validate_class(line):
+            return
+        new_instance = globals()[classname]()
+        new_instance.save()
+        print(new_instance.id)
+
+    def do_show(self, line):
+        """Print the string rep of the instance based on passed id"""
+        if not self.__validate_class(line):
+            return
+
+        result = self.__validate_id(line)
+        if result:
+            state, inst_data = result
+            print(inst_data)
+
+    def do_destroy(self, line):
+        """Deletes an instance based on the class name and id"""
+        if not self.__validate_class(line):
+            return
+
+        result = self.__validate_id(line)
+        if result:
+            state, inst_data = result
+            key = f"{inst_data.__class__.__name__}.{inst_data.id}"
+            del models.storage.all()[key]
+            models.storage.save()
+
+    def do_all(self, line):
+        """Prints all string representation of all instances"""
+        class_name = self.parseline(line)[0]
+
+        if class_name and not globals().get(class_name):
+            print("** class doesn't exist **")
+        else:
+            all_objs = models.storage.all()
+            if class_name:
+                keys = all_objs.keys()
+                print([str(all_objs[key])
+                    for key in keys if key.startswith(class_name)])
+            else:
+                for obj in all_objs:
+                    print([str(all_objs[obj])])
 
 
 if __name__ == '__main__':
