@@ -44,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         class_name = self.parseline(line)[0]
 
         if class_name is None:
-            print(" **class name missing **")
+            print("**class name missing **")
             return None
         elif not globals().get(class_name):
             print(f"** class doesn't exist **")
