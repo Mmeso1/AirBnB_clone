@@ -48,4 +48,5 @@ class BaseModel:
         Updates the public instance attribute updated_at with the current time
         """
         self.updated_at = datetime.now()
+        models.storage.new(self)
         models.storage.save()
