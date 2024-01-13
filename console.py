@@ -7,9 +7,15 @@
 import cmd
 import models
 import shlex
+import re
 from datetime import datetime
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -106,7 +112,7 @@ based on or not on the class"""
             if class_name:
                 keys = all_objs.keys()
                 print([str(all_objs[key])
-                    for key in keys if key.startswith(class_name)])
+                      for key in keys if key.startswith(class_name)])
             else:
                 for obj in all_objs:
                     print([str(all_objs[obj])])
@@ -137,6 +143,22 @@ based on or not on the class"""
                 setattr(inst_data, attr, attr_type(value))
                 setattr(inst_data, 'updated_at', datetime.now())
                 models.storage.save()
+
+    def __parse(self, arg_str):
+        parsed_arg = re.split(r"\(|, (?![^{}[\]()]*[}\]])", arg_str[:-1])
+        return parsed_arg
+
+    def precmd(self, args):
+        if "." in args:
+            args = args.split('.', 1)
+            classname = args[0]
+            arguments = self.__parse(args[1])
+            function = arguments[0]
+            line = f"{function} {classname} {(' ').join(arguments[1:])}"
+            return cmd.Cmd.precmd(self, line)
+        else:
+            return cmd.Cmd.precmd(self, args)
+        return
 
 
 if __name__ == '__main__':
