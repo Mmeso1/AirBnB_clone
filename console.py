@@ -8,6 +8,7 @@ import cmd
 import models
 import shlex
 import re
+import uuid
 from datetime import datetime
 from models.base_model import BaseModel
 from models.user import User
@@ -56,7 +57,10 @@ class HBNBCommand(cmd.Cmd):
         """to validate the id input in line"""
         classname = self.parseline(line)[0]
         _id = self.parseline(line)[1]
+        if _id.startswith('"') and _id.endswith('"'):
+            _id = _id[1:-1]
         inst_data = models.storage.all().get(classname + '.' + _id)
+        print(f"{classname}, {_id}, {inst_data}")
 
         if not _id:
             print("** instance id missing **")
