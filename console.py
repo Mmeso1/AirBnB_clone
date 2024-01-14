@@ -138,11 +138,17 @@ based on or not on the class"""
             elif arg_count == 3:
                 print("** value missing **")
             else:
-                attr, value = args[2:4]
-                attr_type = type(value)
-                setattr(inst_data, attr, attr_type(value))
-                setattr(inst_data, 'updated_at', datetime.now())
-                models.storage.save()
+                if '{' in args[2]:
+                    dict_arg = re.split(r" (?![^{}[\]()]*[}\]])", line)
+                    for key, value in eval(dict_arg[2]).items():
+                        argument = f"{args[0]} {args[1]} {key} {value}"
+                        self.do_update(argument)
+                else:
+                    attr, value = args[2:4]
+                    attr_type = type(value)
+                    setattr(inst_data, attr, attr_type(value))
+                    setattr(inst_data, 'updated_at', datetime.now())
+                    models.storage.save()
 
     def __parse(self, arg_str):
         parsed_arg = re.split(r"\(|, (?![^{}[\]()]*[}\]])", arg_str[:-1])
