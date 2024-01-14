@@ -60,7 +60,6 @@ class HBNBCommand(cmd.Cmd):
         if _id.startswith('"') and _id.endswith('"'):
             _id = _id[1:-1]
         inst_data = models.storage.all().get(classname + '.' + _id)
-        print(f"{classname}, {_id}, {inst_data}")
 
         if not _id:
             print("** instance id missing **")
@@ -157,6 +156,18 @@ based on or not on the class"""
     def __parse(self, arg_str):
         parsed_arg = re.split(r"\(|, (?![^{}[\]()]*[}\]])", arg_str[:-1])
         return parsed_arg
+
+    def do_count(self, line):
+        'Retrieves the number of instances of a class'
+        if not self.__validate_class(line):
+            return
+
+        classname = self.parseline(line)[0]
+        models.storage.reload()
+        objects = models.storage.all()
+        instances = [obj for obj in objects.values()
+                     if type(obj).__name__ == classname]
+        print(len(instances))
 
     def precmd(self, args):
         if "." in args:
