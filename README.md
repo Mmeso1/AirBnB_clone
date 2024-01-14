@@ -1,4 +1,4 @@
-# AirBnB_clone
+ AirBnB_clone
 The console based app for handling data storage of the Airbnb clone
 
 ## Project Overview
@@ -28,3 +28,49 @@ Clone the repository from GitHub:
 
 ```bash
 git clone https://github.com/Mmeso1/AirBnB_clone.git
+### Project Files
+
+The project includes the following essential files:
+
+- `console.py`: The main executable of the project, serving as the command interpreter.
+- `models/engine/file_storage.py`: Class for serializing instances to a JSON file and deserializing from JSON.
+- `models/__init__.py`: Unique FileStorage instance for the application.
+- `models/base_model.py`: Class defining common attributes/methods for other classes.
+- Additional classes: `user.py`, `state.py`, `city.py`, `amenity.py`, `place.py`, `review.py`.
+
+### Usage
+
+The program can run in two modes: Interactive and Non-interactive.
+
+### Interactive Mode
+
+```bash
+./console.py
+```
+
+In this mode, a prompt (hbnb) appears, allowing users to enter commands.
+
+### Non-Interactive Mode
+
+```bash
+echo "help" | ./console.py
+```
+
+In this mode commands can be piped into the shell for non-interactive mode.
+
+```(hbnb)
+Documented commands (type help <topic>):
+========================================
+
+EOF  all  count  create  destroy  help  quit  show  update
+
+(hbnb)
+```
+
+### Format of Command Input
+
+Commands must be piped through `echo` in non-interactive mode. In interactive mode, commands are entered directly when the prompt appears.
+
+## Arguments
+
+Most commands support various options or arguments. Ensure proper spacing when entering parameters.
