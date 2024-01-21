@@ -14,8 +14,8 @@
   color: #ffffff;
   height: 48px;
   width: 20%;
-  margin-left: auto; /* This will push the button to the right */
-  margin-right: 30px; /* Preserve the right padding */
+  margin-left: auto;
+  margin-right: 30px;
   border: transparent;
   border-radius: 4px;
   display: flex;
@@ -30,12 +30,7 @@
 .filters div {
   height: 100%;
   width: 25%;
-}
-
-.filters .locations h3,
-.filters .locations h4,
-.filters .amenities h3,
-.filters .amenities h4 {
+  position: relative;
   padding: 0 0 0 2rem;
 }
 
@@ -57,21 +52,25 @@
 .popover {
   background-color: #fafafa;
   border: 1px solid #dddddd;
+  width: 100%;
   border-radius: 4px;
-  padding: 1rem;
+  padding-left: 0rem;
+  padding-top: 1rem;
   visibility: hidden;
   margin-top: -2px;
-  transition: visibility 0s, opacity 0.5s linear;
+  position: absolute;
+  left: 0;
 }
 
 .popover ul {
   margin-top: -1rem;
-  padding: 0;
+  padding-bottom: 0.5rem;
 }
 
 .popover ul > li,
 .popover li {
   margin-bottom: 0.3rem;
+  padding-left: 1rem;
 }
 
 .popover ul,
