@@ -1,0 +1,143 @@
+.places > h1,
+.places h2 {
+  font-size: 30px;
+}
+
+.places > div {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.places > div > article {
+  width: 390px;
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid #ff5a5f;
+  text-align: center;
+  position: relative;
+}
+
+.places h2 {
+  margin-top: 0;
+  padding-bottom: 1rem;
+}
+
+.price_by_night {
+  color: #ff5a5f;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid #ff5a5f;
+  border-radius: 50%;
+  min-width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 2%;
+  right: 5%;
+}
+
+/* Info on the room */
+.information {
+  height: 80px;
+  border-top: 1px solid #dddddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.information > div {
+  margin-top: 2rem;
+  line-height: 1px;
+  text-align: center;
+  width: 100px;
+}
+
+.max_guest::before {
+  content: url('../images/icon_group.png');
+}
+
+.number_rooms::before {
+  content: url('../images/icon_bed.png');
+}
+
+.number_bathrooms::before {
+  content: url('../images/icon_bath.png');
+}
+
+.user {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.user > span {
+  font-weight: bold;
+}
+
+.description {
+  margin-bottom: 2rem;
+}
+
+.user,
+.description {
+  text-align: left;
+}
+
+/* Amenitites style */
+.places article .amenities,
+.places article .reviews {
+  text-align: left;
+  margin-top: 40px;
+}
+
+.places article .amenities > h2,
+.places article .reviews > h2 {
+  font-size: 16px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.places article .amenities > ul,
+.places article .reviews > ul {
+  list-style: none;
+}
+
+.places article .amenities > ul li,
+.places article .reviews > ul li {
+  display: flex;
+  align-items: center;
+  margin-left: -2.5rem;
+  gap: 1rem;
+}
+
+.places article .amenities > ul li:before {
+  content: '';
+  background-size: 30px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+
+.places article .amenities > ul li:nth-child(1)::before {
+  background-image: url(../images/icon_tv.png);
+}
+
+.places article .amenities > ul li:nth-of-type(2)::before {
+  background-image: url(../images/icon_wifi.png);
+}
+
+.places article .amenities > ul li:nth-of-type(3)::before {
+  background-image: url(../images/icon_pets.png);
+}
+
+.places article .reviews p {
+  font-size: 12px;
+  margin-top: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .places > div > article {
+    width: 100%;
+  }
+}
